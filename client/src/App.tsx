@@ -27,13 +27,7 @@ export default function App() {
   const [userCountry, setUserCountry] = useState<UserCountry | undefined>(
     undefined
   );
-  const [idx, setIdx] = useState<{[key:string]: IDX}>({'ZZ': {  //is this ok?!!!
-    M: 0,
-    N: 0,
-    Nu: 0,
-    P: 0,
-    global: 0,
-  }});
+  const [idx, setIdx] = useState<{[key:string]: IDX}>();
 
   // eslint-disable-next-line no-restricted-globals
   // screen.orientation.lock('portrait')

@@ -1,6 +1,6 @@
 const url = 'https://hstwdrop.co';
 
-import { CountryDataType, IDXObj, UserCountry, CountrySpecificPastData, DataDate } from "../../Types";
+import { CountryDataType, IDXObj, UserCountry, CountrySpecificPastData, DataDate, IDX } from "../../Types";
 
 import React from 'react';
 
@@ -25,12 +25,12 @@ export async function getTodayIndividualData(
     .catch((err) => err);
 }
 
-export async function getDateSpecificGlobalData(date: string, setter: ) {
-  return fetch(`${url}/request?date=${date}`)
-    .then((response) => response.json())
-    .then((data) => setter(Object.values(data)))
-    .catch((err) => err);
-}
+// export async function getDateSpecificGlobalData(date: string, setter: ) {
+//   return fetch(`${url}/request?date=${date}`)
+//     .then((response) => response.json())
+//     .then((data) => setter(Object.values(data)))
+//     .catch((err) => err);
+// }
 
 // export async function getDateSpecificIndividualData(alphaCode: string, date: string, setter) {
 //   return fetch(`${url}/request?code=${alphaCode}&date=${date}`)
@@ -43,7 +43,7 @@ export async function getDateSpecificIndividualIdx(alphaCode: string, date: stri
   try {
     return fetch(`${url}/idx?code=${alphaCode}&date=${date}`)
     .then((response) => response.json())
-    .then((data) => setter(Object.values(data)[0]))
+    .then((data) => setter(Object.values(data)[0] as IDX))
     .catch((err) => err)
   }
   catch {
@@ -61,12 +61,12 @@ export async function getDateSpecificGlobalIdx(
     .catch((err) => err);
 }
 
-export async function getWorldToday(setter) {
-  return fetch(`${url}/today?code=world`)
-    .then((response) => response.json())
-    .then((data) => setter(data))
-    .catch((err) => err);
-}
+// export async function getWorldToday(setter) {
+//   return fetch(`${url}/today?code=world`)
+//     .then((response) => response.json())
+//     .then((data) => setter(data))
+//     .catch((err) => err);
+// }
 
 export async function getCountryDetails(alphaCode: string) {
   return fetch(

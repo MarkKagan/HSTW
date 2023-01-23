@@ -5,13 +5,7 @@ import { IDX } from '../../../Types';
 
 export default function HappyIndex() {
   const [idx, setIdx] = useState<IDX>();
-  const [yIdx, setYIdx] = useState<IDX>({
-  M: 0,
-  N: 0,
-  Nu: 0,
-  P: 0,
-  global: 0
-});
+  const [yIdx, setYIdx] = useState<IDX>();
 
   function parseDate(date: Date): string {
     const d = String(date.getDate()).padStart(2, '0');
@@ -35,8 +29,8 @@ export default function HappyIndex() {
 
   return (
     <div id="index-container">
-      {idx 
-      ? 
+      {idx && yIdx
+      &&
       <>
       <div id='today-index-container' className='index-containers'>
       <span id="index">World Happiness</span>
@@ -46,8 +40,8 @@ export default function HappyIndex() {
       <span id="yesterday-comparison">Yesterday </span>
       <span>{Math.floor(yIdx.global * 10)}</span>
       </div>
-      </>
-      :
+      </>}
+      {yIdx &&
       <span id="index">Index : {`${Math.floor(yIdx.global * 10) / 100}`}</span>
       }
     </div>
