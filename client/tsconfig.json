@@ -1,0 +1,21 @@
+
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "noEmit": true,
+    "strict": true,
+    "target": "es5",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "baseUrl": "src",
+
+      "allowJs": true
+
+  },
+  "include": ["src"],
+
+}
