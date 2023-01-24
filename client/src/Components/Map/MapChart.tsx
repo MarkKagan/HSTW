@@ -1,22 +1,26 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Map.css';
-import Globe from 'react-globe.gl'
+import Globe from 'react-globe.gl';
+import GlobeControls from "react-globe.gl"
 import { getDateSpecificGlobalIdx } from '../../Util/requests';
 import { generateColor, parseDate } from '../../Util/Utility';
 
+import * as GeoJSON from 'geojson';
+
 const geoUrl = process.env.PUBLIC_URL + '/assets/Topology.json';
+
 
 import { IDXObj, MapChart } from '../../../Types';
 
 export default function MapChart({ clickSet, mobile, innerWidth }: MapChart) {
 
-  const globeEl = useRef();
+
   const [idx, setIdx] = useState<IDXObj>();
   const [countries, setCountries] = useState({ features: []});
   const [hoverD, setHoverD] = useState()
   const [clickD, setClickD] = useState()
   // This function will check the position of the cursor on hover
-
+  const globeEl = React.useRef<typeof GlobeControls>(null);
   useEffect(() => {
     const today = new Date()
 
@@ -27,18 +31,20 @@ export default function MapChart({ clickSet, mobile, innerWidth }: MapChart) {
       .then(countries=> {
         setCountries(countries);
       });
-    globeEl.current.controls().autoRotate = true;
-    globeEl.current.controls().autoRotateSpeed = 0.3;
-    globeEl.current.pointOfView({ altitude: 2 }, 3000);
+      if (globeEl.current) {
+        globeEl.current.controls().autoRotate = true;
+        globeEl.current.controls().autoRotateSpeed = 0.3;
+        globeEl.current.pointOfView({ altitude: 2 }, 3000);
+      }
   }, []);
 
 
   return (
     <>
-    {mobile 
+    {mobile
       ?
       <div id="mobile-container">
-      <Globe 
+      <Globe
       ref = {globeEl}
       height={500}
       width={innerWidth - 24}
@@ -59,7 +65,7 @@ export default function MapChart({ clickSet, mobile, innerWidth }: MapChart) {
       </div>
       :
       <div id="map-container">
-      <Globe 
+      <Globe
       ref = {globeEl}
       height={window.innerHeight / 1.5}
       width={window.innerWidth - 40}
