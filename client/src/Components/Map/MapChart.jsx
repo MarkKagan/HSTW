@@ -9,7 +9,7 @@ const geoUrl = process.env.PUBLIC_URL + '/assets/Topology.json';
 export default function MapChart({ clickSet, mobile, innerWidth }) {
 
   const globeEl = useRef();
-  const [idx, setIdx] = useState(false);
+  const [idx, setIdx] = useState();
   const [countries, setCountries] = useState({ features: []});
   const [hoverD, setHoverD] = useState()
   const [clickD, setClickD] = useState()
@@ -46,6 +46,10 @@ export default function MapChart({ clickSet, mobile, innerWidth }) {
       polygonSideColor={d => d === hoverD ? 'steelblue' : generateColor(idx[d.properties.ISO_A2 !== '-99' ? d.properties.ISO_A2 : d.properties.FIPS_10_], 0.15)}
       polygonCapColor={d => generateColor(idx[d.properties.ISO_A2 !== '-99' ? d.properties.ISO_A2 : d.properties.FIPS_10_], 1, d === clickD ? 'click' : undefined)}
       onPolygonClick={d => {
+        console.log('name and Alpha-2', {
+          name: d.properties.NAME,
+          "Alpha-2": d.properties.ISO_A2,
+        });
         clickSet({name : d.properties.NAME, 'Alpha-2' : d.properties.ISO_A2})
         setClickD(d)
       }}
@@ -75,7 +79,7 @@ export default function MapChart({ clickSet, mobile, innerWidth }) {
       polygonLabel={({ properties: d }) => `${d.ADMIN} | ${d.ISO_A2}`}
       />
       </div>
-     }
-     </>
+    }
+    </>
   );
 }

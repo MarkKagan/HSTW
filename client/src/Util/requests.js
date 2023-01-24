@@ -45,7 +45,7 @@ export async function getDateSpecificIndividualIdx(alphaCode, date, setter) {
 export async function getDateSpecificGlobalIdx(date, setter) {
   return fetch(`${url}/idx?date=${date}`)
     .then((response) => response.json())
-    .then((data) => setter(Object.values(data)[0]))
+    .then((data) => {console.log('DATA',Object.values(data)[0]); setter(Object.values(data)[0])})
     .catch((err) => err);
 }
 
