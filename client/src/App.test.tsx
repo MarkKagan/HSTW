@@ -2,11 +2,14 @@ import * as React from "react";
 import {act} from 'react-dom/test-utils';
 import * as ReactDOM from "react-dom";
 import App from "./App";
-import {render} from "@testing-library/react"
+import {render, fireEvent} from "@testing-library/react"
 
 import Navbar from "./Components/Navbar/Navbar";
 import Footer from "./Components/Footer/Footer";
 import Title from "./Components/Title";
+import MapChart from "./Components/Map/MapChart";
+import About from "./Pages/About";
+import * as jest from 'jest';
 
 
 describe('App Test', function () {
@@ -15,6 +18,7 @@ describe('App Test', function () {
 
    });
 });
+
 
 
 describe('Title Test', () => {
@@ -37,6 +41,8 @@ describe('Title Test', () => {
         const spans = containder.querySelectorAll('span');
         expect(spans).toHaveLength(0)
     });
+
+
 
 })
 
