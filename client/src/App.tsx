@@ -3,7 +3,6 @@ import Navbar from "./Components/Navbar/Navbar";
 import Menu from "./Components/Menu/Menu";
 import Footer from "./Components/Footer/Footer";
 import { getUserCountry, getDateSpecificGlobalIdx } from "./Util/requests";
-//@ts-ignore
 import { parseDate } from "./Util/Utility";
 import { useState, useEffect } from "react";
 //@ts-ignore
@@ -12,6 +11,8 @@ import Home from "./Pages/Home";
 import About from "./Pages/About";
 //@ts-ignore
 import Transparency from "./Pages/Transparency";
+
+
 import React from "react";
 
 import { Clicked, UserCountry, IDX } from "../Types";
@@ -44,7 +45,7 @@ export default function App() {
     const date = parseDate(new Date());
     getUserCountry(setUserCountry);
 
-    getDateSpecificGlobalIdx(date, setIdx);
+    getDateSpecificGlobalIdx(date, setIdx as any);
 
     return () => {
       window.removeEventListener("resize", handleWindowSizeChange);
@@ -57,7 +58,7 @@ export default function App() {
         <Navbar setMenu={setMenu} mobile={mobile} />
         {menu ? (
           <Menu
-            idx={idx}
+            idx={idx as any}
             setMenu={setMenu}
             userCountry={userCountry}
             setClicked={setClicked}

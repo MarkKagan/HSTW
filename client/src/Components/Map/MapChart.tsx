@@ -5,14 +5,13 @@ import GlobeControls from "react-globe.gl"
 import { getDateSpecificGlobalIdx } from '../../Util/requests';
 import { generateColor, parseDate } from '../../Util/Utility';
 
-import * as GeoJSON from 'geojson';
 
 const geoUrl = process.env.PUBLIC_URL + '/assets/Topology.json';
 
 
-import { IDXObj, MapChart } from '../../../Types';
+import { IDXObj, mapChart, MapChartProps } from '../../../Types';
 
-export default function MapChart({ clickSet, mobile, innerWidth }: MapChart) {
+export default function MapChart(props:MapChartProps) {
 
 
   const [idx, setIdx] = useState<IDXObj>();
@@ -32,33 +31,35 @@ export default function MapChart({ clickSet, mobile, innerWidth }: MapChart) {
         setCountries(countries);
       });
       if (globeEl.current) {
-        globeEl.current.controls().autoRotate = true;
-        globeEl.current.controls().autoRotateSpeed = 0.3;
-        globeEl.current.pointOfView({ altitude: 2 }, 3000);
+        (globeEl.current as any).controls().autoRotate = true;
+        (globeEl.current as any).controls().autoRotateSpeed = 0.3;
+        (globeEl.current as any).pointOfView({ altitude: 2 }, 3000);
       }
   }, []);
 
 
   return (
     <>
-    {mobile
+    {props.mobile
       ?
       <div id="mobile-container">
       <Globe
-      ref = {globeEl}
+      ref = {globeEl as any}
       height={500}
       width={innerWidth - 24}
       globeImageUrl="//unpkg.com/three-globe/example/img/earth-dark.jpg"
       backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
-      polygonsData={countries.features.filter(d => d.properties.ISO_A2 !== 'AQ')}
-      polygonSideColor={d => d === hoverD ? 'steelblue' : generateColor(idx[d.properties.ISO_A2 !== '-99' ? d.properties.ISO_A2 : d.properties.FIPS_10_], 0.15)}
-      polygonCapColor={d => generateColor(idx[d.properties.ISO_A2 !== '-99' ? d.properties.ISO_A2 : d.properties.FIPS_10_], 1, d === clickD ? 'click' : undefined)}
+      polygonsData={(countries.features as any).features.filter((d:any) => d.properties.ISO_A2 !== 'AQ')}
+
+      polygonSideColor={(d: any) => d === hoverD ? 'steelblue' : generateColor((idx as any)[d.properties.ISO_A2 !== '-99' ? d.properties.ISO_A2 : d.properties.FIPS_10_], 0.15) as any}
+
+      polygonCapColor={(d: any) => generateColor((idx as any)[d.properties.ISO_A2 !== '-99' ? d.properties.ISO_A2 : d.properties.FIPS_10_], 1, d === clickD ? 'click' : undefined) as any}
       onPolygonClick={d => {
-        clickSet({name : d.properties.NAME, 'Alpha-2' : d.properties.ISO_A2})
-        setClickD(d)
+        (props.clickSet as any)({name : (d as any).properties.NAME, 'Alpha-2' : (d as any).properties.ISO_A2})
+        setClickD(d as any)
       }}
       polygonStrokeColor={() => '#111'}
-      polygonLabel={({ properties: d }) => `${d.ADMIN} | ${d.ISO_A2}`}
+      polygonLabel={({ properties: d }:any) => `${(d as any).ADMIN} | ${(d as any).ISO_A2}`}
       polygonAltitude={0.04}
       polygonsTransitionDuration={1000}
       />
@@ -66,21 +67,21 @@ export default function MapChart({ clickSet, mobile, innerWidth }: MapChart) {
       :
       <div id="map-container">
       <Globe
-      ref = {globeEl}
+      ref = {globeEl as any}
       height={window.innerHeight / 1.5}
       width={window.innerWidth - 40}
       globeImageUrl="//unpkg.com/three-globe/example/img/earth-dark.jpg"
       backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
-      polygonsData={countries.features.filter(d => d.properties.ISO_A2 !== 'AQ')}
-      polygonSideColor={d => d === hoverD ? 'steelblue' : generateColor(idx[d.properties.ISO_A2 !== '-99' ? d.properties.ISO_A2 : d.properties.FIPS_10_], 0.15)}
-      polygonCapColor={d => generateColor(idx[d.properties.ISO_A2 !== '-99' ? d.properties.ISO_A2 : d.properties.FIPS_10_], 1, d === hoverD ? 'hover' : d === clickD ? 'click' : undefined)}
-      onPolygonHover={setHoverD}
+      polygonsData={countries.features.filter((d:any) => d.properties.ISO_A2 !== 'AQ')}
+      polygonSideColor={(d:any) => d === hoverD ? 'steelblue' : generateColor((idx as any)[d.properties.ISO_A2 !== '-99' ? d.properties.ISO_A2 : d.properties.FIPS_10_], 0.15) as any}
+      polygonCapColor={(d:any) => generateColor((idx as any)[d.properties.ISO_A2 !== '-99' ? d.properties.ISO_A2 : d.properties.FIPS_10_], 1, d === hoverD ? 'hover' : d === clickD ? 'click' : undefined) as any}
+      onPolygonHover={setHoverD as any}
       onPolygonClick={d => {
-        clickSet({name : d.properties.NAME, 'Alpha-2' : d.properties.ISO_A2})
-        setClickD(d)
+        (props.clickSet as any)({name : (d as any).properties.NAME, 'Alpha-2' : (d as any).properties.ISO_A2})
+        setClickD(d as any)
       }}      polygonStrokeColor={() => '#111'}
       polygonAltitude={0.07}
-      polygonLabel={({ properties: d }) => `${d.ADMIN} | ${d.ISO_A2}`}
+      polygonLabel={({ properties: d }:any) => `${d.ADMIN} | ${d.ISO_A2}`}
       />
       </div>
     }
