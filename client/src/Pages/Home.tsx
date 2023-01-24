@@ -4,8 +4,9 @@ import Title from '../Components/Title';
 import Graph from '../Components/Graph/Graph';
 import { Dna } from 'react-loader-spinner';
 import { useState, useRef, useEffect } from 'react';
-
-export default function Home({mobile, innerWidth, idx, clicked, setClicked}) {
+import { CountrySpecificPastData, graph,MapChartProps } from '../../Types';
+import React from 'react';
+export default function Home({mobile, innerWidth, idx, clicked, setClicked}:any) {
 
   const scrollToRef = useRef();
   const [loader, setLoader] = useState(true);
@@ -21,7 +22,7 @@ export default function Home({mobile, innerWidth, idx, clicked, setClicked}) {
   }, []);
 
   function scroll() {
-    scrollToRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    (scrollToRef as any).current.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   return (
@@ -48,11 +49,11 @@ export default function Home({mobile, innerWidth, idx, clicked, setClicked}) {
           mobile={mobile}
           innerWidth={innerWidth}
         />
-        <div ref={scrollToRef}>
+        <div ref={scrollToRef as any}>
         </div>
-          <Individual 
-          clicked={clicked} 
-          scrollFunc={scroll} 
+          <Individual
+          clicked={clicked}
+          scrollFunc={scroll}
           mobile={mobile} />
           <Graph
           idx={idx}
