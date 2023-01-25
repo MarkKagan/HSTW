@@ -108,7 +108,7 @@ export async function getCountrySpecificPastData(country: string, days: number, 
           },
         ],
       }
-      setter(chartData);
+      setter(chartData as any);
     })
     .catch(()=> setter(undefined))
 }
