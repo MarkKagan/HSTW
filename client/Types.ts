@@ -84,10 +84,10 @@ export type IndividualProps = {
 };
 
 // export type MenuIDX = {
-//   a: string 
+//   a: string
 // }
 
-export type MapChart = {
+export type mapChart = {
   clickSet: Clicked,  //finish this
   mobile: boolean,
   innerWidth: number
@@ -104,7 +104,21 @@ export type DataDate = {
   date: string
 }
 
-export type Graph = {
+export type graph = {
   clicked: Clicked,
   mobile: boolean
+}
+
+
+export interface MapChartProps {
+  clickSet: any;
+  clicked: any;
+  mobile: any;
+  innerWidth: any;
+}
+
+export interface GraphProps {
+  idx: any;
+  clicked: any;
+  mobile: any;
 }

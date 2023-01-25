@@ -34,11 +34,11 @@ export default function HappyIndex() {
       <>
       <div id='today-index-container' className='index-containers'>
       <span id="index">World Happiness</span>
-      <span>{Math.floor(idx.global * 10)}</span>
+      <span id="idxValue">{Math.floor(idx.global * 10)}</span>
       </div>
       <div id='yestarday-index-container' className='index-containers'>
       <span id="yesterday-comparison">Yesterday </span>
-      <span>{Math.floor(yIdx.global * 10)}</span>
+      <span id="yIdxValue">{Math.floor(yIdx.global * 10)}</span>
       </div>
       </>}
       {yIdx &&

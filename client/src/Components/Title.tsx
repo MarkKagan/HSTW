@@ -1,14 +1,15 @@
+import React from "react";
 import { useEffect, useState } from "react";
 
-export default function Title({ index, mobile }) {
+export default function Title({ index, mobile }:any) {
 
   const[wordObj, setWordObj] = useState()
 
   useEffect(()=>{
-    if (index.world) setWordObj(assignWord(index.world.global))
+    if (index.world) setWordObj(assignWord(index.world.global) as any)
   }, [index])
 
-  function assignWord(idx) {
+  function assignWord(idx:any) {
     if (idx < -2) {
       return {
         word : 'Terrible',
@@ -48,17 +49,17 @@ export default function Title({ index, mobile }) {
         ?
         <h2 className="master" id="mobile-title">
           The World is doing <br/><span id="keyword-title" style={{
-            'backgroundColor' : wordObj.color
-            }}>{wordObj.word}</span> today.
+            'backgroundColor' : (wordObj as any).color
+            }}>{(wordObj as any).word}</span> today.
         </h2>
         :
         <h2 className="master" id='desktop-title'>
         The World is doing <br/><span id="keyword-title" style={{
-          'backgroundColor' : wordObj.color
-          }}>{wordObj.word}</span> today.
+          'backgroundColor' : (wordObj as any).color
+          }}>{(wordObj as any).word}</span> today.
         </h2>
-        
-      ) 
+
+      )
       :
       ""
       }
