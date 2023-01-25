@@ -1,12 +1,13 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { getDateSpecificIndividualIdx } from '../../Util/requests';
 import './happyIndex.css';
+import { IDX } from '../../../Types';
 
 export default function HappyIndex() {
-  const [idx, setIdx] = useState(0);
-  const [yIdx, setYIdx] = useState(0);
+  const [idx, setIdx] = useState<IDX>();
+  const [yIdx, setYIdx] = useState<IDX>();
 
-  function parseDate(date) {
+  function parseDate(date: Date): string {
     const d = String(date.getDate()).padStart(2, '0');
     const m = String(date.getMonth() + 1).padStart(2, '0');
     const y = String(date.getFullYear()).slice(-2);
@@ -28,20 +29,20 @@ export default function HappyIndex() {
 
   return (
     <div id="index-container">
-      {idx 
-      ? 
+      {idx && yIdx
+      &&
       <>
       <div id='today-index-container' className='index-containers'>
       <span id="index">World Happiness</span>
-      <span>{parseInt(idx.global * 10)}</span>
+      <span id="idxValue">{Math.floor(idx.global * 10)}</span>
       </div>
       <div id='yestarday-index-container' className='index-containers'>
       <span id="yesterday-comparison">Yesterday </span>
-      <span>{parseInt(yIdx.global * 10)}</span>
+      <span id="yIdxValue">{Math.floor(yIdx.global * 10)}</span>
       </div>
-      </>
-      :
-      <span id="index">Index : {`${parseInt(yIdx.global * 10)} / 100`}</span>
+      </>}
+      {yIdx &&
+      <span id="index">Index : {`${Math.floor(yIdx.global * 10) / 100}`}</span>
       }
     </div>
   );

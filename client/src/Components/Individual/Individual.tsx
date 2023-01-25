@@ -1,19 +1,23 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Individual.css';
 import { getCountryDetails, getTodayIndividualData } from '../../Util/requests';
+//@ts-ignore
 import { generateColor } from '../../Util/Utility';
 
-export default function Individual({ clicked, scrollFunc = () => {}, mobile }) {
-  const [country, setCountry] = useState();
-  const [topics, setTopics] = useState([]);
-  const [headlines, setHeadlines] = useState([]);
-  const [countryData, setCountryData] = useState();
+import { CountryDataType, StringNumberArray, Country, Clicked, IndividualProps } from '../../../Types';
+
+
+export default function Individual({ clicked, mobile }: IndividualProps) {
+  const [country, setCountry] = useState<Country>();
+  const [topics, setTopics] = useState<string[] | undefined>();
+  const [headlines, setHeadlines] = useState<string[] | undefined>();
+  const [countryData, setCountryData] = useState<CountryDataType | undefined>();
 
   useEffect(() => {
-    const arrOfTopics = [];
-    let arrOfHL = [];
+    const arrOfTopics: string[] = [];
+    let arrOfHL: string[] = [];
     if (countryData && countryData.topics) {
-      countryData.topics.forEach((topic) => {
+      countryData.topics.forEach((topic: StringNumberArray) => {
         if (/[a-zA-Z0-9]/.test(topic[0])) {
           arrOfTopics.push(`${topic[0]} [${topic[1]}]`);
         }
@@ -28,9 +32,6 @@ export default function Individual({ clicked, scrollFunc = () => {}, mobile }) {
     if (clicked['Alpha-2']) {
       fetchCountry();
       getTodayIndividualData(clicked['Alpha-2'], setCountryData);
-      if (clicked['Alpha-2'] !== 'world') {
-        scrollFunc();
-      }
     }
   }, [clicked]);
 
@@ -93,14 +94,14 @@ export default function Individual({ clicked, scrollFunc = () => {}, mobile }) {
                   <span id="index-title-mobile">
                     {country.name.official}'s happiness :
                     {countryData.idx
-                      ? parseInt(countryData.idx.global * 10)
+                      ? parseInt((countryData.idx.global * 10).toString())
                       : 'Unknown'}
                   </span>
                 ) : (
                   <span id="index-title">
                     Today, {country.name.official} has a happiness score of :
                     {countryData.idx
-                      ? parseInt(countryData.idx.global * 10)
+                      ? Math.floor(countryData.idx.global * 10)
                       : 'Unknown'}
                   </span>
                 )}
@@ -120,7 +121,7 @@ export default function Individual({ clicked, scrollFunc = () => {}, mobile }) {
                       </span>
                     )}
                     <div id="indiv-main-topics" className="indiv-list">
-                      {topics.length ? (
+                      {topics?.length ? (
                         <span>{topics.join(' - ')}</span>
                       ) : (
                         <span>No Data</span>
